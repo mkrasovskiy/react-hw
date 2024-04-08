@@ -12,7 +12,14 @@ export default function TodoLis() {
             setTask("");
         }
     };
-    
+    const delButton = indexToRemove => {
+        setTasks(tasks.filter(index => index !== indexToRemove));
+    };
+    const taskList = tasks.map((task, index) =>
+            <div key={task}>{index + 1}. {task}
+                <button onClick={() => delButton(task)}>Удалить</button>
+            </div>
+    );
     return (
         <>
             <p>Управление задачами</p>
@@ -20,11 +27,8 @@ export default function TodoLis() {
                 <TextField type="text" placeholder="Задача" value={task} onChange={(e) => setTask(e.target.value)} />
                 <BasicButtons onClick={addTask}/>
             </div>
-            <ol className='todo-list'>
-                    {tasks.length > 0 && tasks.map((task) => (
-                        <li key={task}>{task}</li>
-                    ))}
-            </ol>
+            
+            <div>{taskList}</div>
         </>
     );
 }
